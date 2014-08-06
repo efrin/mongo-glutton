@@ -1,0 +1,16 @@
+{
+    "name": "ephrin/mongodb-glutton",
+    "description": "MongoDB cache and denormalization problem resolver thought ephrin receptors like behavior of DBRef",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ephrin",
+            "email": "lazycommit@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/console": "2.5.3",
+        "symfony/yaml": "2.5.3"
+    }
+}
