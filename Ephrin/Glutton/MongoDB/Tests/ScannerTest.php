@@ -4,7 +4,7 @@
 namespace Ephrin\Glutton\MongoDB\Tests;
 
 
-use Ephrin\Glutton\MongoDB\Detector\Scan;
+use Ephrin\Glutton\MongoDB\Detector\Reader;
 
 class ScannerTest extends GluttonBase
 {
@@ -32,13 +32,13 @@ class ScannerTest extends GluttonBase
                             [
                                 '_id' => $id,
                                 'ref' => $ref,
-                                'createdBy' => __METHOD__
+                                'createdBy' => 'simple'
                             ]
                         );
 
                         $fetched = $this->getTargetCollection()->findOne(['_id' => $id]);
 
-                        $scan = new Scan();
+                        $scan = new Reader();
 
                         $scan->walk($fetched);
 
@@ -58,7 +58,7 @@ class ScannerTest extends GluttonBase
                                 [
                                     '_id' => $id,
                                     'ref' => $ref2,
-                                    'createdBy' => __METHOD__
+                                    'createdBy' => 'exoticOwning'
                                 ],
                                 $ref1
                             )
@@ -66,7 +66,7 @@ class ScannerTest extends GluttonBase
 
                         $fetched = $this->getTargetCollection()->findOne(['_id' => $id]);
 
-                        $scan = new Scan();
+                        $scan = new Reader();
 
                         $scan->walk($fetched);
 
@@ -91,13 +91,13 @@ class ScannerTest extends GluttonBase
                                     'a' => $ref1,
                                     'b' => $ref2
                                 ],
-                                'createdBy' => __METHOD__
+                                'createdBy' => 'nesting'
                             ]
                         );
 
                         $fetched = $this->getTargetCollection()->findOne(['_id' => $id]);
 
-                        $scan = new Scan();
+                        $scan = new Reader();
 
                         $scan->walk($fetched);
 
@@ -122,13 +122,13 @@ class ScannerTest extends GluttonBase
                                     ],
                                     'c' => $ref2
                                 ],
-                                'createdBy' => __METHOD__
+                                'createdBy' => 'deepNesting'
                             ]
                         );
 
                         $fetched = $this->getTargetCollection()->findOne(['_id' => $id]);
 
-                        $scan = new Scan();
+                        $scan = new Reader();
 
                         $scan->walk($fetched);
 
@@ -149,13 +149,13 @@ class ScannerTest extends GluttonBase
                             [
                                 '_id' => $id,
                                 'refs' => [$ref1, $ref2],
-                                'createdBy' => __METHOD__
+                                'createdBy' => 'array'
                             ]
                         );
 
                         $fetched = $this->getTargetCollection()->findOne(['_id' => $id]);
 
-                        $scan = new Scan();
+                        $scan = new Reader();
 
                         $scan->walk($fetched);
 
@@ -183,13 +183,13 @@ class ScannerTest extends GluttonBase
                                     ],
                                     $ref4
                                 ],
-                                'createdBy' => __METHOD__
+                                'createdBy' => 'arrayWithNested'
                             ]
                         );
 
                         $fetched = $this->getTargetCollection()->findOne(['_id' => $id]);
 
-                        $scan = new Scan();
+                        $scan = new Reader();
 
                         $scan->walk($fetched);
 
@@ -217,13 +217,13 @@ class ScannerTest extends GluttonBase
                             [
                                 '_id' => $id,
                                 'ref1' => $ref1,
-                                'createdBy' => __METHOD__
+                                'createdBy' => 'refsContainsRefsContainsRefsAndArrayOfRefs'
                             ]
                         );
 
                         $fetched = $this->getTargetCollection()->findOne(['_id' => $id]);
 
-                        $scan = new Scan();
+                        $scan = new Reader();
 
                         $scan->walk($fetched);
 
@@ -247,11 +247,11 @@ class ScannerTest extends GluttonBase
         $this->assertEquals(count($expected), count($foundReferences));
 
         foreach ($expected as $path => $reference) {
-            $this->assertEquals($reference, Scan::retrieve($fetched, $path));
+            $this->assertEquals($reference, Reader::retrieve($fetched, $path));
 
             $this->assertArrayHasKey($path, $foundReferences);
 
-            $this->assertEquals($foundReferences[$path], Scan::simplifyReference($reference));
+            $this->assertEquals($foundReferences[$path], Reader::simplifyReference($reference));
         }
     }
 

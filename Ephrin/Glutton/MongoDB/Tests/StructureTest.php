@@ -24,12 +24,12 @@ class StructureTest extends GluttonBase
 
         $po = (object)$objectPrototype;
 
-
         $data = [
             '_id' => $id,
             'simpleObject' => (object)$objectPrototype,
             'objectWithPrivateProperty' => $po
         ];
+
         $this->getTargetCollection()->save($data);
 
         $doc = $this->getTargetCollection()->findOne(['_id' => $id]);

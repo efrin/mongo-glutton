@@ -7,10 +7,10 @@ namespace Ephrin\Glutton\MongoDB\Detector;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
- * Class Scan
+ * Class Reader
  * @package Ephrin\Glutton\MongoDB\Detector
  */
-class Scan
+class Reader
 {
 
     private $started = false;
@@ -98,7 +98,7 @@ class Scan
             $this->clear();
             $this->started = true;
         } else {
-            throw new \RuntimeException('Scan was already started. To run new scan please invoke clear() method');
+            throw new \RuntimeException('Reader was already started. To run new scan please invoke clear() method');
         }
 
         if (is_array($record)) {
